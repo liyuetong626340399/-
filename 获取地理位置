@@ -1,0 +1,3 @@
+//获取地理位置(经度、纬度)
+//方法一：H5
+getcurrentposition()和watchposition()不再工作在不安全的根源。要使用此功能，您应该考虑将应用程序切换到安全源，如HTTPS。更多细节见https://goo.gl/rsttgz
