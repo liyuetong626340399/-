@@ -31,7 +31,6 @@
                         var loc = event.data;
                         latitude = loc.lat;
                         longitude = loc.lng;
-                        console.log(event);
                         _self.userDetails();
                     }, false);
                     
