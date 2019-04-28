@@ -4,7 +4,7 @@
     设置meta标签 清除页面缓存
     <meta http-equiv="Expires" content="0">
     <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache"> //目的是不让页面缓存，每次访问必须到服务器读取
     <meta http-equiv="Cache" content="no-cache">
     
    
