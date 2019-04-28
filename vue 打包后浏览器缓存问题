@@ -1,0 +1,20 @@
+ 参考网址：https://kouss.com/vue-no-cache.html
+1. 首先解决Vue入口文件index.html缓存问题
+
+    设置meta标签 清除页面缓存
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+    
+   
+ 2.vue-cli里的默认配置，css和js的名字都加了哈希值，所以新版本css、js和就旧版本的名字是不同的，不会有缓存问题。
+
+ 3.但是把打包好的index.html放到服务器里去的时候，index.html在服务器端可能是有缓存的，这需要在服务器配置不让缓存index.html
+ 
+    nginx 配置如下：
+
+    location = /index.html {
+        add_header Cache-Control "no-cache, no-store";
+    }
+   
