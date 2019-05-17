@@ -1,0 +1,68 @@
+什么是跨域以及产生原因 
+
+跨域是指a页面想获取b页面资源，如果a、b页面的协议、域名、端口、子域名不同，或是a页面为ip地址，b页面为域名地址，所进行的访问行动都是跨域的，
+而浏览器为了安全问题一般都限制了跨域访问，也就是不允许跨域请求资源。 
+
+什么是同源策略？
+
+同源策略/SOP（Same origin policy）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，
+浏览器很容易受到XSS、CSFR等攻击。所谓同源是指”协议+域名+端口”三者相同，即便两个不同的域名指向同一个ip地址，也非同源。
+
+同源策略限制以下几种行为：
+
+1.) Cookie、LocalStorage 和 IndexDB 无法读取
+2.) DOM 和 Js对象无法获得
+3.) AJAX 请求不能发送
+
+常见跨域场景
+
+URL 说明 是否允许通信 
+http://www.domain.com/a.js 
+http://www.domain.com/b.js 同一域名，不同文件或路径 允许 
+http://www.domain.com/lab/c.js
+
+http://www.domain.com:8000/a.js 
+http://www.domain.com/b.js 同一域名，不同端口 不允许
+
+http://www.domain.com/a.js 
+https://www.domain.com/b.js 同一域名，不同协议 不允许
+
+http://www.domain.com/a.js 
+http://192.168.4.12/b.js 域名和域名对应相同ip 不允许
+
+http://www.domain.com/a.js 
+http://x.domain.com/b.js 主域相同，子域不同 不允许 
+http://domain.com/c.js
+
+http://www.domain1.com/a.js 
+http://www.domain2.com/b.js 不同域名 不允许 
+
+跨域解决方案
+
+1、 通过jsonp跨域
+2、 document.domain + iframe跨域
+3、 location.hash + iframe
+4、 window.name + iframe跨域
+5、 postMessage跨域
+6、 跨域资源共享（CORS）
+7、 nginx代理跨域（后端做nginx反向代理解决跨域 ）
+8、 nodejs中间件代理跨域
+9、 WebSocket协议跨域
+
+更多讨论
+
+Q1：例如img script style等标签，都允许垮域引用资源？
+A：在浏览器中，并且加载的方式其实相当于一次普通的GET请求，唯一不同的是，为了安全起见，浏览器不允许这种方式下对加载到的资源的读写操作，
+而只能使用标签本身应当具备的能力（比如脚本执行、样式应用等等）。
+
+Q2：例如img script style等标签，都允许垮域引用资源？
+A：在浏览器中，并且加载的方式其实相当于一次普通的GET请求，唯一不同的是，为了安全起见，浏览器不允许这种方式下对加载到的资源的读写操作，
+而只能使用标签本身应当具备的能力（比如脚本执行、样式应用等等）。
+
+Q3：JSONP和nginx跨域有什么不同
+JSONP和nginx是完全不同的 是可以跨域的，而且在跨域脚本中可以直接回调当前脚本的函数
+原理：是可以跨域的，而且在跨域脚本中可以直接回调当前脚本的函数
+script标签是可以加载异域的JavaScript并执行的，通过预先设定好的callback函数来实现和母页面的交互。它有一个大名，叫做JSONP跨域，
+JSONP是JSON with Padding的略称。它是一个非官方的协议，明明是加载script，为啥和JSON扯上关系呢？原来就是这个callback函数，对它
+的使用有一个典型的方式，就是通过JSON来传参，即将JSON数据填充进回调函数，这就是JSONP的JSON+Padding的含义。JSONP只支持GET请求。
+
