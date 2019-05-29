@@ -1,3 +1,5 @@
+参考文档：https://github.com/staven630/vue-cli3-config
+
 1、npm安装babel-polyfill
 
 npm install babel-polyfill --save-dev
