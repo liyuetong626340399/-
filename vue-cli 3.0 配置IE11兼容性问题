@@ -1,0 +1,20 @@
+1、npm安装babel-polyfill
+
+npm install babel-polyfill --save-dev
+
+2、在入口文件main.js中引入
+
+import'@babel/polyfill';
+
+3、配置 babel.config.js
+module.exports = {
+  // presets: [ '@vue/app' ],
+  presets: [
+    [
+      '@vue/app',
+      {
+        useBuiltIns: 'entry'
+      }
+    ]
+  ]
+}
