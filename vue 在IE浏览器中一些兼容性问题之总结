@@ -1,0 +1,22 @@
+问题1. append()在IE浏览器中有兼容问题，兼容性写法请用appendChild
+ 
+实例：
+下载文件
+downloadFile:(href,name)=>
+    {
+        var  a = document.createElement('a');
+        a.href =href
+        a.download=name?name:"文件下载";
+        document.body.appendChild(a); //兼容IE
+        a.click();
+    },
+   
+分析：
+是在parendNode节点中最后一个子节点后插入新Node或者DOMString（字符串，插入后为Text节点）.
+与parentNode.appendChild()的区别在于：
+parentNode.append()可以同时传入多个节点或字符串，没有返回值；
+而parentNode.appendChild()只能传一个节点，且不直接支持传字符串(需要parentNode.appendChild(document.createTextElement('字符串'))代替)，
+返回追加的Node节点
+
+append和appendChild相同的作用，只是一个是jq的写法，一个js原生的写法仅次而已
+
