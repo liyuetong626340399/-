@@ -1,0 +1,68 @@
+vue2页面上要把数字0,1,2...之类的数值转换成对应的枚举文本，解决如下：
+
+方案一：
+
+如果是是否的问题，直接：
+
+{{enable == 1 ? '是' : '否'}}
+
+即可。
+
+ 
+
+方案二：
+
+通过定义字典的情况：
+
+// 定义字典
+
+const map = {boolean: ['否', '是']}
+// 或者
+
+const map = {boolean: {0: '否', 1: '是', 2: '不知道'}}
+// 调用
+
+<div>{{map.boolean[item.enable]}}</div>
+
+第三种
+html:
+
+<tr  v-for="item in warehouses" >
+  <td >{{item.WarehouseName}}</td>
+  <td>{{item.WarehouseType | toText}}</td>
+  <td >{{item.WarehouseDesc }}</td>
+</tr>
+js:
+
+data(){
+    return {
+   
+        warehouses:[
+            {"WarehouseId": 1,"WarehouseType": 1,"WarehouseName": "深圳仓库","WarehouseDesc": "深圳仓库"},
+            {"WarehouseId": 2,"WarehouseType":2,"WarehouseName": "东莞仓库","WarehouseDesc": "东莞仓库"}
+        ]
+    }
+},
+filters: {
+    toText(val) {
+        switch(val) {
+            case 1:
+                return "默认仓库";
+            case 2:
+                return "自建仓库";
+            default: 
+                return "";
+        }
+    }
+}
+
+第四种 
+在data中创建一个枚举的json对象
+
+WarehourseTypeName: {
+    '1': '默认仓库',
+    '2': '自建仓库'
+}
+调用
+
+<td>{{WarehourseTypeName[item.WarehouseType]}}</td>
