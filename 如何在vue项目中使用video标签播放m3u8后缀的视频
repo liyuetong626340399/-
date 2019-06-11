@@ -1,0 +1,30 @@
+https://www.jianshu.com/p/ab866c243c62
+
+第一步
+安装相关依赖包：npm install --save video.js；npm install --save videojs-contrib-hls
+第二步
+引入样式文件，可以在main.js或是在需要的组件文件中引入：import 'video.js/dist/video-js.css'
+第三步
+在组件文件中引入相关JS文件：import videojs from 'video.js'；import 'videojs-contrib-hls'
+第四步
+指定video容器：
+<video id="my-video" class="video-js vjs-default-skin" controls preload="auto" poster="../assets/video.png">
+<source src="[http://127.0.0.1:7086/aaa/213/stream/1.m3u8](http://127.0.0.1:7086/aaa/213/stream/1.m3u8)" type="application/x-mpegURL">
+</video>
+第五步
+在mounted方法中初始化播放器：
+videojs('my-video', {
+bigPlayButton: false,
+textTrackDisplay: false,
+posterImage: true,
+errorDisplay: false,
+controlBar: true
+}, function () {
+this.play()
+})
+注意
+如果浏览器后台出现了如下错误：
+Uncaught (in promise) DOMException: play() failed because the user didn't interact with the document first.
+那么只需要在video标签中添加muted属性就可以了。
+下面是完整的代码
+
