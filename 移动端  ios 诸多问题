@@ -4,6 +4,7 @@
   
 2.ios手机 input输入框键盘消失后，键盘区域仍存在
   这个问题会导致页面定位的按钮会失灵，所以当键盘消失后，我们要想办法将页面拉下来，通过监听键盘事件，来解决：
+  第一种：
   let keyTimer = null;
   document.body.addEventListener('focusin', () => {
     //软键盘弹起事件
@@ -18,3 +19,56 @@
       }
     }, 200);
   });
+  
+  第二种：
+  document.body.addEventListener('focusout',()=>{
+  if(store.getters.getAppType === 'ios'){
+    window.scrollTo({
+      top:0
+    })
+  }
+  
+  第三种：
+  navigator.userAgent 属性是一个只读的字符串，声明了浏览器用于 HTTP 请求的用户代理头的值。
+  document.body.addEventListener('focusout',()=>{
+  if(navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+    window.scrollTo({
+      top:0
+    })
+  }
+
+3.input框 blur事件与保存按钮执行顺序问题
+  华瑞个险项目：保存时会先执行保存事件，再执行input框失去焦点事件
+  
+
+  安卓：监听是否有输入键盘，通过监听屏幕可视区高度
+  vue写法：
+  data() {
+            return {
+                isShowBtn:true,//隐藏底部按钮
+                domHeight: document.documentElement.clientHeight,  //默认屏幕高度
+                showHeight: document.documentElement.clientHeight,   //实时屏幕高度
+            }
+         }
+  mounted: function() {
+            const that = this
+            window.onresize = () => {
+                return (() => {
+                    that.showHeight = document.documentElement.clientHeight//这里需要注意一下可视区高度。
+                })()
+            }
+        }
+
+  watch:{
+            //监听手机屏幕高度变化，来控制下一步按钮的显示，隐藏
+            showHeight() {
+                if (this.domHeight > this.showHeight) {
+                    this.isShowBtn = false
+                } else {
+                    this.isShowBtn = true
+                }
+            }
+       }
+       
+       
+       
