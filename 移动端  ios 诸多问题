@@ -21,26 +21,73 @@
   });
   
   第二种：
-  document.body.addEventListener('focusout',()=>{
-  if(store.getters.getAppType === 'ios'){
-    window.scrollTo({
-      top:0
-    })
-  }
-  
-  第三种：
   navigator.userAgent 属性是一个只读的字符串，声明了浏览器用于 HTTP 请求的用户代理头的值。
   document.body.addEventListener('focusout',()=>{
-  if(navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+  if(store.getters.getAppType === 'ios' || navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
     window.scrollTo({
       top:0
     })
   }
+})
+
+扩展：
+
+我们可以通过userAgent来判断，比如检测某些关键字，例如：AppleWebKit*****Mobile或AppleWebKit，需要注意的是有些浏览器的userAgent中并不包含AppleWebKit关键字，可能会是Linux,UCBrowser等等。
+<script type="text/javascript"> 
+/* 
+* 智能机浏览器版本信息: 
+*/ 
+var browser={ 
+versions:function(){ 
+var u = navigator.userAgent, app = navigator.appVersion; 
+return {//移动终端浏览器版本信息 
+trident: u.indexOf('Trident') > -1, //IE内核 
+presto: u.indexOf('Presto') > -1, //opera内核 
+webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核 
+gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核 
+mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/), //是否为移动终端 
+ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端 
+android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器 
+iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQ HD浏览器 
+iPad: u.indexOf('iPad') > -1, //是否iPad 
+webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部 
+}; 
+}(), 
+language:(navigator.browserLanguage || navigator.language).toLowerCase() 
+} 
+ 
+document.writeln("语言版本: "+browser.language); 
+document.writeln(" 是否为移动终端: "+browser.versions.mobile); 
+document.writeln(" ios终端: "+browser.versions.ios); 
+document.writeln(" android终端: "+browser.versions.android); 
+document.writeln(" 是否为iPhone: "+browser.versions.iPhone); 
+document.writeln(" 是否iPad: "+browser.versions.iPad);
+document.writeln(navigator.userAgent); 
+</script>
+
 
 3.input框 blur事件与保存按钮执行顺序问题
   华瑞个险项目：保存时会先执行保存事件，再执行input框失去焦点事件
-  
-
+     解决方法：写一个隐藏的input框，点击保存时，触发focus()事件，调用保存方法时，加个定时器
+     
+        <div class="tab" v-show="isShowBtn">
+            <input type="text" v-show="false" ref="inputVal">
+            <div class="left">¥{{productDes.orderAmount}}</div>
+            <div class="right" @click="save">下一步</div>
+        </div>
+        
+        save(){
+                let that = this
+                this.$nextTick(function () {
+                    //DOM 更新了
+                    that.$refs.inputVal.focus()
+                })
+                setTimeout(function () {
+                    that.saveNext()
+                },500)
+            },
+            
+            
   安卓：监听是否有输入键盘，通过监听屏幕可视区高度
   vue写法：
   data() {
