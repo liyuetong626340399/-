@@ -1,0 +1,20 @@
+1.input与select 不对齐，然而在pc浏览器上没问题
+  引起原因是ios给input框默认padding值了
+  解决方法：padding-left:0;
+  
+2.ios手机 input输入框键盘消失后，键盘区域仍存在
+  这个问题会导致页面定位的按钮会失灵，所以当键盘消失后，我们要想办法将页面拉下来，通过监听键盘事件，来解决：
+  let keyTimer = null;
+  document.body.addEventListener('focusin', () => {
+    //软键盘弹起事件
+    clearTimeout(keyTimer);
+  });
+  document.body.addEventListener('focusout', () => {
+    // 软键盘关闭事件
+    window.scrollTo(0, 0);
+    keyTimer = setTimeout(() => {
+      if (window.pageYOffset > 0) {
+        window.scrollTo(0, 0);
+      }
+    }, 200);
+  });
