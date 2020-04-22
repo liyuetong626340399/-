@@ -1,0 +1,47 @@
+1.后端返回的是文件流
+          
+          let elink = document.createElement("a");
+          // 设置下载文件名
+          elink.download = "疾病导出" + ".xlsx";
+          elink.style.display = "none";
+          let blob = new Blob([res]);
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+          
+
+          //文件下载请求
+          let uploadFileRequest = (url, params) => {
+              return new Promise((success, error) => {
+                  $axios({
+                     method: 'post',
+                     url: url,
+                     data: params,
+                     responseType: 'blob'
+                  }).then(res => {
+                     success(res);
+                  })
+                  .catch(err => {
+                     if (!handleError(err.response)) {
+                        error(err);
+                     }
+                  });
+              });
+           }
+           
+2.后端给的是url地址           
+           
+           //导出名单操作
+            exportList(){
+                var herf_link = baseUrl.apiBaseUrl + "conference/manage/signUpRecordManager/exportSignupRecord" + "?meetingId=" + this.meetingId;
+                this.$util.downloadFile(herf_link,'导出名单')             
+            }
+      
+             downloadFile:(href,name)=> {
+                var  a = document.createElement('a');
+                a.href =href
+                a.download=name?name:"文件下载";
+                document.body.appendChild(a); //兼容IE
+                a.click();
+             },
