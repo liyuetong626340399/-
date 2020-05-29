@@ -1,0 +1,48 @@
+1. Json数据按照某一属性值进行排序
+   function compare(property,desc) {
+            return function (a, b) {
+                var value1 = a[property];
+                var value2 = b[property];
+                if(desc==true){
+                    // 升序排列
+                    return value1 - value2;
+                }else{
+                    // 降序排列
+                    return value2 - value1;
+                }
+            }
+        }
+    json.sort(compare("value",false));
+    
+2.Json数据，id重复去重
+    const DATA = [
+       {
+          id:'1',
+          name:'哈哈'
+       },
+       {
+          id:'1',
+          name:'哈哈'
+       },
+       {
+          id:'2',
+          name:'呵呵'
+       },
+       {
+          id:'3',
+          name:'嘻嘻'
+       },
+    ]
+    
+    let newData = this.toRepeatFunc(DATA)
+    
+    toRepeatFunc(data) {
+      let hash = {}
+      let data2 = data.reduce((preVal, curVal) => {
+        curVal.checked = false
+        hash[curVal.id] ? '' : (hash[curVal.id] = true && preVal.push(curVal))
+        return preVal
+      }, [])
+      return data2
+    }
+    console.log(newData)
