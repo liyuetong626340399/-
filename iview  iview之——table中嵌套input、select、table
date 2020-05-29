@@ -1,0 +1,32 @@
+  {
+          title: '计算依据比例',
+          align: 'center',
+          key: 'scale',
+          render: (h, params) => {
+            return h(
+              'Input',
+              {
+                props: {
+                  value: self.data5[params.index].scale,
+                },
+                attrs: {
+                  //   contenteditable: true,
+                  type: 'textarea',
+                },
+                // on: {
+                //   blur: (event) => {
+                //     console.log(123)
+                //     self.data5[params.index].scale = event.target.innerText
+                //     console.log(self.data5[params.index].scale)
+                //   },
+                // },
+                on: {
+                  input: (val) => {
+                    self.data5[params.index].scale = val
+                  },
+                },
+              },
+              params.row.scale
+            )
+          },
+        },
