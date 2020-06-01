@@ -1,32 +1,79 @@
-  {
+
+1.table 中嵌套  input
+{
+          title: '计算基础变化率',
+          width: 80,
+          align: 'center',
+          key: 'calRange',
+          render: (h, params) => {
+            return h('Input', {
+              props: {
+                value: params.row.calRange,
+                // size:"small"
+              },
+              on: {
+                input: (val) => {
+                  self.data5[params.index].calRange = val
+                },
+              },
+            })
+          },
+        }
+        
+        
+2.table 中嵌套  select 多选
+{
+          title: '保障责任计算依据',
+          align: 'center',
+          key: 'calBasis',
+          render: (h, params) => {
+            return h(
+              'Select',
+              {
+                props: {
+                  value: params.row.calBasis,
+                  multiple: true,
+                  // size:"small"
+                },
+                on: {
+                  'on-change': (event) => {
+                    self.data5[params.index].calBasis = event
+                  },
+                },
+              },
+              self.dictTypeList.calBasis.map((item) => {
+                return h(
+                  'Option',
+                  {
+                    props: {
+                      value: item.dictCode,
+                    },
+                  },
+                  item.dictType
+                )
+              })
+            )
+          },
+        },
+
+3.table 中嵌套  textarea
+{
           title: '计算依据比例',
           align: 'center',
           key: 'scale',
           render: (h, params) => {
-            return h(
-              'Input',
-              {
-                props: {
-                  value: self.data5[params.index].scale,
-                },
-                attrs: {
-                  //   contenteditable: true,
-                  type: 'textarea',
-                },
-                // on: {
-                //   blur: (event) => {
-                //     console.log(123)
-                //     self.data5[params.index].scale = event.target.innerText
-                //     console.log(self.data5[params.index].scale)
-                //   },
-                // },
-                on: {
-                  input: (val) => {
-                    self.data5[params.index].scale = val
-                  },
+            return h('Input', {
+              props: {
+                value: params.row.scale,
+              },
+              attrs: {
+                type: 'textarea',
+              },
+              on: {
+                input: (val) => {
+                  self.data5[params.index].scale = val
                 },
               },
-              params.row.scale
-            )
+            })
           },
-        },
+        }
